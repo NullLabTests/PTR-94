@@ -1,13 +1,14 @@
 # PTR-94: Perfect Thermodynamic Respiration — Achieving the Theoretical Maximum of 94 ATP per Glucose
 
-[![Conceptual](https://img.shields.io/badge/status-conceptual-orange)](https://github.com/)
-[![Hypothetical](https://img.shields.io/badge/type-hypothetical%20design-blue)](https://github.com/)
-[![Thermodynamics](https://img.shields.io/badge/focus-bioenergetics%20%7C%20synthetic%20biology-green)](https://github.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Status: Conceptual](https://img.shields.io/badge/status-conceptual-orange?style=flat-square)](https://github.com/NullLabTests/PTR-94)
+[![Bioenergetics](https://img.shields.io/badge/focus-bioenergetics-blue?style=flat-square)](https://github.com/NullLabTests/PTR-94)
+[![Synthetic Biology](https://img.shields.io/badge/focus-synthetic%20biology-green?style=flat-square)](https://github.com/NullLabTests/PTR-94)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+[![arXiv](https://img.shields.io/badge/arXiv-draft-red?style=flat-square)](docs/paper.tex)
 
 > **A rigorously designed hypothetical metabolic pathway that captures the full thermodynamic free energy of glucose oxidation (~2870 kJ/mol) into 94 ATP molecules per glucose under standard biochemical conditions — the theoretical maximum.**
 
-This repository contains the complete conceptual design, thermodynamic analysis, stoichiometric tables, mechanistic blueprint, and implementation roadmap for **PTR-94** (Perfect Thermodynamic Respiration targeting 94 ATP). It is intended as a target for synthetic biology, de novo protein design, cell-free systems, and in silico evolution experiments in artificial life / symbolic chemistry frameworks.
+This repository contains the complete conceptual design, thermodynamic analysis, stoichiometric tables, mechanistic blueprint, and implementation roadmap for **PTR-94** (Perfect Thermodynamic Respiration targeting 94 ATP). It is intended as a target for synthetic biology, de novo protein design, cell-free systems, and in silico evolution experiments in artificial life and symbolic chemistry frameworks.
 
 ---
 
@@ -20,23 +21,61 @@ Natural aerobic respiration yields ~30–38 ATP per glucose molecule, representi
 **Overall target reaction:**
 
 ```math
-C₆H₁₂O₆ + 6 O₂ + 94 ADP + 94 Pᵢ  →  6 CO₂ + 6 H₂O + 94 ATP
+\mathrm{C_6H_{12}O_6 + 6\ O_2 + 94\ ADP + 94\ P_i \longrightarrow 6\ CO_2 + 6\ H_2O + 94\ ATP}
 ```
 
 (ΔG balanced at standard biochemical conditions.)
 
 ---
 
+## Quick-Start Energy Flow
+
+```mermaid
+flowchart LR
+    G[Glucose] --> M1[Module 1<br/>Glycolysis]
+    M1 --> P[Pyruvate ×2]
+    P --> M2[Module 2<br/>PDH + TCA Cycle]
+    M2 --> R10[10 NADH + 2 FADH₂]
+    R10 --> M3[Module 3<br/>Perfect Coupling Module]
+    M3 --> ATP[94 ATP]
+    
+    O2[O₂] --> M3
+    M3 --> W[H₂O]
+    M1 --> A1[+2 ATP + 2 NADH]
+    M2 --> A2[+2 ATP + 8 NADH + 2 FADH₂]
+    M3 --> A3[+90 ATP via redox]
+    
+    style M3 fill:#f96,stroke:#333,stroke-width:2px
+    style ATP fill:#9f6,stroke:#333,stroke-width:3px
+    style G fill:#eef,stroke:#333
+    style O2 fill:#eef,stroke:#333
+```
+
+---
+
 ## Thermodynamic Foundation
+
+```mermaid
+graph LR
+    subgraph Energy_Balance[Energy Balance]
+        E1[Glucose Oxidation<br/>ΔG°′ = −2870 kJ/mol] --> E2[÷ 30.5 kJ/mol per ATP]
+        E2 --> E3[Theoretical Ceiling<br/>n ≈ 94.1 ATP]
+        E3 --> E4[PTR-94 Target<br/>94 ATP]
+    end
+    
+    style E1 fill:#f88
+    style E3 fill:#ff8
+    style E4 fill:#8f8
+```
 
 ### Energy released by glucose oxidation
 ```math
-\Delta G^{o'} \approx -2870\ \text{kJ/mol}
+\Delta G^{\circ\prime} \approx -2870\ \text{kJ/mol}
 ```
 
 ### Energy cost of ATP synthesis (standard biochemical)
 ```math
-\Delta G^{o'} \approx +30.5\ \text{kJ/mol}
+\Delta G^{\circ\prime} \approx +30.5\ \text{kJ/mol}
 ```
 
 **Theoretical maximum ATP yield:**
@@ -47,10 +86,21 @@ n_{\max} = \frac{2870}{30.5} \approx 94.1
 Under more realistic *physiological* cellular conditions (ΔG ≈ −50 to −60 kJ/mol for ATP), the ceiling drops to ~48–57 ATP. PTR-94 targets the **standard-condition theoretical maximum** as the ultimate engineering goal.
 
 Real biology achieves only ~32–40% of this limit due to:
-- Fixed proton-pumping stoichiometry (~10 H⁺ per NADH)
-- H⁺/ATP ratio ≈ 4 (including transport)
-- Proton leaks and slippage
-- Compartmentalization and shuttle costs
+
+| Limitation | Impact |
+|------------|--------|
+| Fixed proton-pumping stoichiometry | ~10 H⁺ per NADH (vs ~30 required) |
+| H⁺/ATP ratio ≈ 4 (including transport) | Further reduces yield per proton |
+| Proton leaks and slippage | 5–20% efficiency loss |
+| Compartmentalization and shuttle costs | 2–4 ATP equivalent overhead |
+
+```mermaid
+xychart-beta
+    title "ATP Yield Comparison"
+    x-axis ["Eukaryote", "Prokaryote", "PTR-94", "Theoretical Ceiling"]
+    y-axis "ATP per Glucose" 0 --> 100
+    bar [31, 37, 94, 94]
+```
 
 ---
 
@@ -58,11 +108,54 @@ Real biology achieves only ~32–40% of this limit due to:
 
 PTR-94 consists of three modules. Modules 1 and 2 are **standard, well-characterized biochemistry**. Module 3 is the novel engineered component.
 
+```mermaid
+flowchart TB
+    subgraph M1[Module 1: Glycolysis]
+        direction TB
+        GLC[Glucose C₆] --> G3P[G3P ×2]
+        G3P --> PYR[Pyruvate ×2]
+        GLC -.->|net| ATP2a[+2 ATP]
+        GLC -.->|net| NADH2a[+2 NADH]
+    end
+    
+    subgraph M2[Module 2: PDH + TCA]
+        direction TB
+        PYR --> ACA[Acetyl-CoA ×2]
+        ACA --> TCA_CYCLE[TCA Cycle ×2]
+        TCA_CYCLE --> CO2[6 CO₂]
+        ACA -.->|net| ATP2b[+2 ATP]
+        ACA -.->|net| NADH8[+8 NADH]
+        ACA -.->|net| FADH2_2[+2 FADH₂]
+    end
+    
+    subgraph M3[Module 3: PCM]
+        direction TB
+        ETC[Extended ETC] --> ATPS[ATP Synthase]
+        ATPS --> ATP90[+90 ATP]
+        ETC --> H2O[H₂O]
+    end
+    
+    PYR --> ACA
+    NADH2a --> ETC
+    NADH8 --> ETC
+    FADH2_2 --> ETC
+    O2IN[O₂] --> ETC
+    
+    ATP2a --> TOTAL[Grand Total<br/>94 ATP]
+    ATP2b --> TOTAL
+    ATP90 --> TOTAL
+    
+    style M1 fill:#ddf,stroke:#66f
+    style M2 fill:#dfd,stroke:#6f6
+    style M3 fill:#fdd,stroke:#f66,stroke-width:2px
+    style TOTAL fill:#ffd,stroke:#fa0,stroke-width:2px
+```
+
 ### Module 1: Glycolysis (Embden–Meyerhof–Parnas)
 **Location:** Cytosol (or equivalent compartment)  
 **Net (per glucose):**
 ```math
-\text{Glucose} + 2 \text{NAD}^+ + 2 \text{ADP} + 2 \text{P}_i \rightarrow 2 \text{Pyruvate} + 2 \text{NADH} + 2 \text{ATP} + 2 \text{H}_2\text{O} + 2 \text{H}^+
+\mathrm{Glucose + 2\ NAD^+ + 2\ ADP + 2\ P_i \longrightarrow 2\ Pyruvate + 2\ NADH + 2\ ATP + 2\ H_2O + 2\ H^+}
 ```
 
 **Contribution:** +2 ATP (substrate-level) + 2 NADH
@@ -98,11 +191,11 @@ The PCM is a hypothetical multi-subunit membrane (or artificial compartmental) s
 
 **Stoichiometry Summary Table**
 
-| Process                  | Substrate-level ATP | NADH | FADH₂ | ATP from PCM (redox) | Total ATP (this stage) |
-|--------------------------|---------------------|------|-------|----------------------|------------------------|
-| Glycolysis               | +2                  | 2    | 0     | +15                  | **17**                 |
-| PDH + TCA                | +2                  | 8    | 2     | +75                  | **77**                 |
-| **Grand Total**          | **+4**              | **10** | **2** | **+90**              | **94**                 |
+| Process | Substrate-level ATP | NADH | FADH₂ | ATP from PCM (redox) | Total ATP |
+|:--------|:-------------------:|:----:|:-----:|:--------------------:|:---------:|
+| Glycolysis | +2 | 2 | 0 | +15 | **17** |
+| PDH + TCA | +2 | 8 | 2 | +75 | **77** |
+| **Grand Total** | **+4** | **10** | **2** | **+90** | **94** |
 
 (Average effective yield in PCM: ~7.5–8 ATP per NADH equivalent.)
 
@@ -128,13 +221,46 @@ The PCM is a hypothetical multi-subunit membrane (or artificial compartmental) s
 ### Cofactors
 Retain biological NAD⁺/NADH, FAD/FADH₂, and quinone/cytochrome analogs, or introduce designed high-efficiency variants.
 
+### PCM Architecture Diagram
+
+```mermaid
+flowchart LR
+    subgraph PCM[Perfect Coupling Module]
+        direction TB
+        CI[Complex I<br/>NADH→Q<br/>30 H⁺] --> CIII[Complex III<br/>Q→Cyt c<br/>+pumping]
+        CIII --> CIV[Complex IV<br/>Cyt c→O₂<br/>+pumping]
+        CIV --> PMF[Proton Motive Force<br/>Δp]
+        PMF --> ATP_Synth[ATP Synthase<br/>H⁺/ATP = 3]
+        ATP_Synth --> ATP90[90 ATP]
+        CII[Complex II<br/>FADH₂→Q<br/>direct] --> CIII
+    end
+    
+    NADH[10 NADH] --> CI
+    FADH2[2 FADH₂] --> CII
+    O2[O₂] --> CIV
+    H2O[H₂O] --> CIV
+    
+    style PCM fill:#fdd,stroke:#f66,stroke-width:2px
+    style ATP90 fill:#9f6,stroke:#333,stroke-width:2px
+    style PMF fill:#ff8,stroke:#333
+```
+
 ---
 
 ## Energy Balance Verification
 
+```mermaid
+xychart-beta
+    title "Energy Distribution (kJ/mol)"
+    x-axis ["Glucose ΔG°′", "Captured in ATP", "Dissipated"]
+    y-axis "kJ/mol" 0 --> 3000
+    bar [2870, 2867, 3]
+```
+
 - Total free energy available from glucose oxidation: **−2870 kJ/mol**
 - Energy stored in 94 ATP (standard ΔG°′): 94 × 30.5 ≈ **2867 kJ/mol**
 - **Theoretical coupling efficiency:** >99.9%
+- Energy dissipated per glucose: **~3 kJ/mol** (entropic cost only)
 
 All exergonic steps in Modules 1–2 release energy in manageable packets. Module 3 is engineered so its driving force exactly balances the synthesis of 90 ATP.
 
@@ -145,12 +271,42 @@ All exergonic steps in Modules 1–2 release energy in manageable packets. Modul
 ### High-level feasibility
 Modules 1 and 2 already exist in nature and are extensively characterized. The PCM is the primary engineering challenge but is within the reach of current synthetic biology, protein design (AlphaFold + RFdiffusion), and cell-free reconstitution technologies.
 
+### Implementation Roadmap
+
+```mermaid
+gantt
+    title PTR-94 Implementation Phases
+    dateFormat  YYYY-MM
+    axisFormat  %Y
+    
+    section Phase 1: In Silico
+    Symbolic chemistry evolution   :p1a, 2026-07, 12M
+    Kinetic modeling of PCM steps   :p1b, 2026-09, 14M
+    Protein sequence design         :p1c, 2027-01, 18M
+    
+    section Phase 2: Cell-Free
+    Module 1+2 reconstitution       :p2a, 2027-07, 6M
+    Liposome PCM assembly           :p2b, 2027-10, 9M
+    Microfluidic ATP assay          :p2c, 2028-01, 6M
+    
+    section Phase 3: Synthetic Cell
+    Minimal chassis engineering     :p3a, 2028-04, 12M
+    Full pathway porting            :p3b, 2028-10, 9M
+    Growth selection                :p3c, 2029-01, 12M
+    
+    section Phase 4: Scale-Up
+    Bioproduction strain dev.       :p4a, 2029-07, 18M
+    Continuous cell-free reactor    :p4b, 2029-07, 18M
+```
+
 ### Key challenges
-- Achieving high proton (or equivalent) stoichiometry without structural instability or back-leaks.
-- Managing reactive oxygen species at high activity.
-- Maintaining redox balance and avoiding thermodynamic reversal under high [ATP]/[ADP] ratios.
-- Membrane/compartment integrity under strong proton motive force.
-- In vivo toxicity or burden in a living chassis.
+| Challenge | Severity | Mitigation |
+|-----------|----------|------------|
+| High proton stoichiometry instability | High | Directed evolution + RFdiffusion stabilization |
+| Reactive oxygen species | High | Engineered antioxidant modules |
+| Thermodynamic reversal at high [ATP]/[ADP] | Medium | Irreversible reaction steps, kinetic barriers |
+| Membrane integrity under high Δp | Medium | Synthetic lipid adaptations |
+| In vivo toxicity / metabolic burden | Medium | Inducible expression, chassis engineering |
 
 ### Recommended implementation path
 1. **In silico modeling & evolution** — Seed symbolic chemistry or ALife reaction networks with glycolysis + TCA + candidate PCM reaction rules. Apply selection pressure for ATP yield / growth efficiency. Many runs will rediscover or improve upon chemiosmotic coupling motifs.
@@ -162,36 +318,55 @@ Modules 1 and 2 already exist in nature and are extensively characterized. The P
 
 ## Comparison to Natural Respiration
 
-| Metric                        | Eukaryotic respiration | Prokaryotic respiration | PTR-94 (designed)     |
-|-------------------------------|------------------------|-------------------------|-----------------------|
-| ATP per glucose               | 30–32                  | 36–38                   | **94**                |
-| Redox-derived ATP             | ~28–30                 | ~34                     | **90**                |
-| Thermodynamic efficiency (std. ΔG°′) | ~32–34%           | ~37–40%                 | **~100%** (target)    |
-| Proton stoichiometry (per NADH) | ~10                   | ~10                     | **~30** (engineered)  |
-| Primary limitation            | Biological machinery   | Biological machinery    | Engineering challenge |
+| Metric | Eukaryote | Prokaryote | PTR-94 |
+|:-------|:---------:|:----------:|:------:|
+| ATP per glucose | 30–32 | 36–38 | **94** |
+| Redox-derived ATP | ~28–30 | ~34 | **90** |
+| Thermodynamic efficiency | ~32–34% | ~37–40% | **~100%** |
+| H⁺ pumped per NADH | ~10 | ~10 | **~30** |
+| H⁺/ATP ratio | ~3.7 | ~3.3 | **3.0** |
+| Proton leakage | Significant | Moderate | **Minimized** |
+| Primary bottleneck | Biological machinery | Biological machinery | **Engineering** |
+
+```mermaid
+xychart-beta
+    title "ATP Yield and Efficiency"
+    x-axis ["Eukaryote", "Prokaryote", "PTR-94"]
+    y-axis "Value" 0 --> 100
+    bar [31, 37, 94]
+    line [33, 39, 100]
+```
 
 ---
 
 ## Repository Contents
 
-- `README.md` — This document (full conceptual design)
-- `LICENSE` — MIT License (open for research, modification, and commercial exploration)
-- `diagrams/PTR-94-schematic.jpg` — Conceptual overview figure
-- `simulation/` — Placeholder for stoichiometry verification scripts and energy-balance models (contributions welcome)
-- `docs/` — Future location for expanded LaTeX manuscript draft or supplementary calculations
+| Path | Description |
+|------|-------------|
+| `README.md` | This document — full conceptual design |
+| `LICENSE` | MIT License |
+| `diagrams/PTR-94-schematic.jpg` | Conceptual overview figure |
+| `simulation/stoichiometry_verification.py` | Verified ATP stoichiometry and thermodynamic balance |
+| `simulation/requirements.txt` | Python dependencies |
+| `docs/paper.tex` | LaTeX manuscript draft (arXiv-style format) |
 
 ---
 
 ## How to Cite
 
-If you use or build upon this concept, please cite the original design discussion and this repository:
+If you use or build upon this concept, please cite this repository:
 
+```bibtex
+@software{PTR94_2026,
+  title        = {{PTR-94}: Perfect Thermodynamic Respiration -- Achieving the
+                  Theoretical Maximum of 94 {ATP} per Glucose},
+  author       = {{The PTR-94 Conceptual Design Collective}},
+  year         = {2026},
+  month        = jun,
+  publisher    = {GitHub},
+  url          = {https://github.com/NullLabTests/PTR-94}
+}
 ```
-PTR-94: Perfect Thermodynamic Respiration — Achieving the Theoretical Maximum of 94 ATP per Glucose
-Conceptual design repository (2026). https://github.com/NullLabTests/PTR-94 (or your fork)
-```
-
-(Replace with actual GitHub org/username once published.)
 
 ---
 
@@ -204,7 +379,7 @@ This is a **living conceptual target**. Contributions are welcome in:
 - Experimental protocols for cell-free reconstitution
 - Extensions to alternative electron acceptors or hybrid photo-redox systems
 
-Open an issue or pull request. All contributions will be credited.
+Open an issue or pull request. All contributors will be credited.
 
 ---
 
@@ -219,4 +394,4 @@ This design emerged from discussions on bioenergetic limits, synthetic metabolis
 **Repository maintained by the PTR-94 conceptual design collective.**  
 Last updated: 2026-06-30
 
-*“The theoretical maximum is not a limit to be accepted, but a target to be engineered.”*
+> *"The theoretical maximum is not a limit to be accepted, but a target to be engineered."*
