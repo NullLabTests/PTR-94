@@ -1,4 +1,4 @@
-# PTR-94: Perfect Thermodynamic Respiration — Achieving the Theoretical Maximum of 94 ATP per Glucose
+# PTR-94: Perfect Thermodynamic Respiration: Achieving the Theoretical Maximum of 94 ATP per Glucose
 
 [![Status: Conceptual](https://img.shields.io/badge/status-conceptual-orange?style=flat-square)](https://github.com/NullLabTests/PTR-94)
 [![Bioenergetics](https://img.shields.io/badge/focus-bioenergetics-blue?style=flat-square)](https://github.com/NullLabTests/PTR-94)
