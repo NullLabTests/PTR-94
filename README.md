@@ -4,13 +4,23 @@
 [![Bioenergetics](https://img.shields.io/badge/focus-bioenergetics-blue?style=flat-square)](https://github.com/NullLabTests/PTR-94)
 [![Synthetic Biology](https://img.shields.io/badge/focus-synthetic%20biology-green?style=flat-square)](https://github.com/NullLabTests/PTR-94)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
-[![arXiv](https://img.shields.io/badge/arXiv-draft-red?style=flat-square)](docs/paper.tex)
+[![PDF](https://img.shields.io/badge/PDF-manuscript-red?style=flat-square)](paper.pdf)
+[![LaTeX](https://img.shields.io/badge/LaTeX-source-blue?style=flat-square)](docs/paper.tex)
 
 > **A rigorously designed hypothetical metabolic pathway that captures the full thermodynamic free energy of glucose oxidation (~2870 kJ/mol) into 94 ATP molecules per glucose under standard biochemical conditions — the theoretical maximum.**
 
 This repository contains the complete conceptual design, thermodynamic analysis, stoichiometric tables, mechanistic blueprint, and implementation roadmap for **PTR-94** (Perfect Thermodynamic Respiration targeting 94 ATP). It is intended as a target for synthetic biology, de novo protein design, cell-free systems, and in silico evolution experiments in artificial life and symbolic chemistry frameworks.
 
----
+> **Why this matters:** ATP is the universal energy currency of life. Every metabolic process — protein synthesis, active transport, DNA replication, cell division — ultimately draws from the cellular ATP pool. A pathway that triples the ATP yield per glucose molecule would fundamentally reshape what is economically and energetically possible in biotechnology:
+>
+> - **Industrial bioproduction** — ATP-intensive products (amino acids, vitamins, antibiotics, polymers, biofuels) are currently limited by the cell's energy budget. PTR-94 would allow engineered microbes to convert feedstock into product at 2.5–3× the yield of current strains, slashing substrate costs and fermentation time for everything from pharmaceuticals to bioplastics.
+> - **Cell-free manufacturing** — In vitro protein synthesis and biochemical production systems burn ATP as a consumable reagent. Perfect thermodynamic coupling would eliminate energy waste as the primary cost driver, enabling continuous-flow bioreactors that operate at or near thermodynamic limits.
+> - **Synthetic minimal cells** — Building a self-replicating synthetic cell from scratch requires an energy module that can sustain genome replication, transcription, translation, and membrane maintenance. PTR-94 provides the minimal-viable energy architecture with maximum headroom for additional genetic and metabolic loads.
+> - **Closed-loop life support** — For space missions, submarines, or isolated habitats where every gram of feedstock must be stretched, a 3× improvement in ATP yield from glucose directly translates to reduced resupply mass, smaller bioreactors, and more robust recycling of organic waste.
+> - **Origins of life and evolution** — PTR-94 defines the hard upper bound on biological energy transduction. Comparing natural systems against this limit reveals which inefficiencies are fundamental physical constraints and which are evolutionary accidents — informing both synthetic biology design and our understanding of why life evolved the way it did.
+> - **De novo protein design challenge** — The PCM represents a concrete grand challenge for computational protein design: build a membrane complex that pumps 30 H⁺ per NADH. Success would validate our understanding of chemiosmotic coupling and unlock a new generation of bioenergetic devices.
+>
+> PTR-94 is not just a number — it is a design target that, if realized, would constitute one of the most impactful advances in metabolic engineering and synthetic biology since the discovery of the TCA cycle itself.
 
 ## Abstract
 
@@ -344,11 +354,12 @@ xychart-beta
 | Path | Description |
 |------|-------------|
 | `README.md` | This document — full conceptual design |
+| `paper.pdf` | Compiled manuscript (arXiv-style, 6 pages) |
 | `LICENSE` | MIT License |
 | `diagrams/PTR-94-schematic.jpg` | Conceptual overview figure |
-| `simulation/stoichiometry_verification.py` | Verified ATP stoichiometry and thermodynamic balance |
+| `simulation/stoichiometry_verification.py` | Verified ATP stoichiometry and thermodynamic balance verified by CI |
 | `simulation/requirements.txt` | Python dependencies |
-| `docs/paper.tex` | LaTeX manuscript draft (arXiv-style format) |
+| `docs/paper.tex` | LaTeX source for the manuscript |
 
 ---
 
