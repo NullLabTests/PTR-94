@@ -36,6 +36,7 @@ class ThermodynamicConstants:
     pH_std: float = 7.0          # — Standard biochemical pH
 
 
+ThermodynamicState = ThermodynamicConstants
 CONST = ThermodynamicConstants()
 
 # Standard Gibbs free energy of glucose oxidation (complete to CO2 + H2O)
@@ -61,6 +62,89 @@ GAS_CONSTANT: float = CONST.R      # J/(mol*K) — exposed for convenience
 # ---------------------------------------------------------------------------
 # Core thermodynamic computations
 # ---------------------------------------------------------------------------
+
+
+def compute_delta_g(
+    delta_g0: float,
+    concentrations: dict[str, float] | None = None,
+    temp: float = CONST.T_phys,
+) -> float:
+    """
+    Compute the Gibbs free energy change under non-standard conditions.
+
+    Parameters
+    ----------
+    delta_g0 : float
+        Standard Gibbs free energy change (kJ/mol).
+    concentrations : dict, optional
+        Mapping of species to their concentrations (M). Default None.
+    temp : float
+        Temperature in Kelvin (default: 310.15 K).
+
+    Returns
+    -------
+    float
+        Gibbs free energy change in kJ/mol.
+
+    Notes
+    -----
+    Delta_G = Delta_G0' + R * T * ln(Q), where Q is the reaction quotient.
+    If concentrations is None, returns delta_g0.
+    """
+    if concentrations is None:
+        return delta_g0
+    rt = CONST.R * temp / 1000.0
+    log_product = sum(math.log(c) for c in concentrations.values())
+    return delta_g0 + rt * log_product
+
+
+def compute_equilibrium_constant(
+    delta_g0: float,
+    temp: float = CONST.T_phys,
+) -> float:
+    """
+    Compute the equilibrium constant from the standard Gibbs free energy.
+
+    Parameters
+    ----------
+    delta_g0 : float
+        Standard Gibbs free energy change (kJ/mol).
+    temp : float
+        Temperature in Kelvin (default: 310.15 K).
+
+    Returns
+    -------
+    float
+        Equilibrium constant K_eq (dimensionless).
+
+    Notes
+    -----
+    K_eq = exp(-Delta_G0' / (R * T))
+    """
+    return math.exp(-delta_g0 * 1000.0 / (CONST.R * temp))
+
+
+def standard_conditions_correction(
+    concentrations: dict[str, float],
+    temp: float = CONST.T_phys,
+) -> float:
+    """
+    Compute the correction factor for non-standard biochemical conditions.
+
+    Parameters
+    ----------
+    concentrations : dict
+        Mapping of species to their concentrations (M).
+    temp : float
+        Temperature in Kelvin (default: 310.15 K).
+
+    Returns
+    -------
+    float
+        Correction term in kJ/mol to add to Delta_G0'.
+    """
+    rt = CONST.R * temp / 1000.0
+    return rt * sum(math.log(c) for c in concentrations.values())
 
 def compute_theoretical_max_atp(
     delta_g_glucose: float = STANDARD_GIBBS_GLUCOSE,
