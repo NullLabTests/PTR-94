@@ -246,11 +246,12 @@ class AlternativeCarrierExperiment:
             return ""
         r = self.result
 
+        e0_prime_header = "E0' (V)"
         lines = [
             "=" * 84,
             "  ALTERNATIVE ELECTRON CARRIERS EXPERIMENT — PTR-94",
             "=" * 84,
-            f"  {'Carrier':<20} {'E0\' (V)':>10} {'ATP':>8} {'Eff%':>7} "
+            f"  {'Carrier':<20} {e0_prime_header:>10} {'ATP':>8} {'Eff%':>7} "
             f"{'Redox(kJ)':>10} {'PMF/e':>7} {'H+/NADH':>8}",
             "-" * 84,
         ]
