@@ -11,14 +11,12 @@ All energies in kJ/mol unless otherwise specified.
 
 from __future__ import annotations
 
-import math
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple
 
 from .thermodynamics import (
     STANDARD_GIBBS_GLUCOSE,
     STANDARD_GIBBS_ATP,
-    PHYSIOLOGICAL_GIBBS_ATP,
     compute_coupling_efficiency,
     compute_theoretical_max_atp,
     CONST,

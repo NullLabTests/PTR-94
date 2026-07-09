@@ -9,9 +9,8 @@ effects on enzyme kinetics, proton leak, and overall ATP production.
 
 from __future__ import annotations
 
-import math
-from dataclasses import dataclass, field
-from typing import Any, Dict, List, Tuple
+from dataclasses import dataclass
+from typing import Dict, List, Tuple
 
 import numpy as np
 
@@ -26,15 +25,9 @@ from ..thermodynamics import (
 from ..kinetics import (
     ProtonLeakKinetics,
     ATPSynthaseKinetics,
-    EnzymeKinetics,
 )
 from ..pareto_optimizer import (
     DesignParameters,
-    ObjectiveFunction,
-    NADH_COUNT,
-    FADH2_COUNT,
-    SUBSTRATE_ATP,
-    THEORETICAL_MAX_ATP,
 )
 
 

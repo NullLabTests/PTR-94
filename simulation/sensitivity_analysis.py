@@ -337,7 +337,6 @@ class GlobalSensitivity:
         N = len(f_A)
 
         # Variance estimates
-        f_mean = np.mean(np.concatenate([f_A, f_B, f_AB.ravel()]))
         var_total = np.var(np.concatenate([f_A, f_B, f_AB.ravel()]), ddof=1)
 
         if var_total < 1e-30:

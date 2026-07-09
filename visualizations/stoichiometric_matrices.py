@@ -1,5 +1,4 @@
 from typing import Optional, List
-import math
 
 
 DEFAULT_MATRIX = [

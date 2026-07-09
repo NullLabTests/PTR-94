@@ -10,15 +10,13 @@ to aerobic to the PTR-94 design.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from typing import Any, Dict, List, Tuple
+from dataclasses import dataclass
+from typing import Any, Dict
 
-import numpy as np
 
 from ..thermodynamics import (
     STANDARD_GIBBS_GLUCOSE,
     STANDARD_GIBBS_ATP,
-    compute_theoretical_max_atp,
     compute_coupling_efficiency,
     entropy_production,
 )

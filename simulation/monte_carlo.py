@@ -286,7 +286,6 @@ class MonteCarloEngine:
         Returns:
             Array of physical parameter samples, shape (n, D).
         """
-        n = unit_samples.shape[0]
         physical = np.zeros_like(unit_samples)
 
         for j, dist in enumerate(self.distributions):
@@ -476,7 +475,6 @@ def _normal_ppf(q: np.ndarray) -> np.ndarray:
                    1.42151175831644588870e-7, 2.04426331040495049249e-10 ])
 
     split1 = 0.425
-    split2 = 5.0
 
     result = np.zeros_like(q)
 

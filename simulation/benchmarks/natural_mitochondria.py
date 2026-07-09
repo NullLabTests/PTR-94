@@ -10,20 +10,18 @@ thermodynamic efficiency. Provides detailed energy accounting and comparison.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict
 
-import numpy as np
 
 from ..thermodynamics import (
     STANDARD_GIBBS_GLUCOSE,
     STANDARD_GIBBS_ATP,
-    PHYSIOLOGICAL_GIBBS_ATP,
     compute_theoretical_max_atp,
     compute_coupling_efficiency,
     entropy_production,
     NATURAL_COMPARISON,
 )
-from ..energy_balance import EnergyBalance, full_pathway_energy_balance
+from ..energy_balance import EnergyBalance
 
 
 @dataclass
@@ -118,7 +116,6 @@ class NaturalMitochondriaBenchmark:
             notes="2 ATP net, 8 NADH, 2 FADH2",
         )
         # Add mitochondrial shuttles cost
-        shuttle_cost = 1.5 * self.delta_g_atp
         eb.add_reaction(
             "Mitochondrial shuttles (malate-aspartate + G3P)",
             1.5 * self.delta_g_atp, atp_produced=0, atp_consumed=0,
@@ -135,7 +132,7 @@ class NaturalMitochondriaBenchmark:
             redox_energy + 20.0,  # ~20 kJ dissipated
             atp_produced=int(round(redox_atp)),
             delta_g_atp=self.delta_g_atp,
-            notes=f"10 H+/NADH, 6 H+/FADH2, 3.7 H+/ATP",
+            notes="10 H+/NADH, 6 H+/FADH2, 3.7 H+/ATP",
         )
 
         # PTR-94 comparison
@@ -186,7 +183,7 @@ class NaturalMitochondriaBenchmark:
             f"  Substrate-level ATP:    {r.substrate_atp} ATP",
             f"  Redox-derived ATP:      {r.redox_atp:.1f} ATP",
             f"  H+/NADH:                {r.h_per_nadh:.0f}",
-            f"  H+/FADH2:               6.0",
+            "  H+/FADH2:               6.0",
             f"  H+/ATP synthase:        {r.h_per_atp:.1f}",
             f"  Total H+ pumped:        {10*10 + 6*2:.0f} per glucose",
             "",

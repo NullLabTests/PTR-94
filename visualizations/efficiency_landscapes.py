@@ -1,5 +1,4 @@
 from typing import Optional, Callable
-import math
 
 
 def _default_objective(h_per_nadh: float, h_per_atp: float) -> float:
@@ -49,7 +48,7 @@ def efficiency_landscape(param_x: str = "h_per_nadh",
                 arrowprops=dict(arrowstyle="->", color="red", lw=1.5),
                 bbox=dict(boxstyle="round,pad=0.3", facecolor="white", alpha=0.8))
 
-    cbar = fig.colorbar(contour, ax=ax, label="Normalized ATP Yield\n(fraction of 94)")
+    fig.colorbar(contour, ax=ax, label="Normalized ATP Yield\n(fraction of 94)")
     ax.set_xlabel(f"{param_x}", fontsize=11)
     ax.set_ylabel(f"{param_y}", fontsize=11)
     ax.set_title("PTR-94 Efficiency Landscape\n(ATP yield as function of key PCM parameters)",
@@ -72,7 +71,6 @@ def efficiency_surface_3d(param_x: str = "H⁺/NADH",
                           n_grid: int = 50,
                           save_path: Optional[str] = None) -> Optional[str]:
     try:
-        from mpl_toolkits.mplot3d import Axes3D
         import matplotlib.pyplot as plt
         import numpy as np
     except ImportError:

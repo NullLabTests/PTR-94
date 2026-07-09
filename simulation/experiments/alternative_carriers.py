@@ -13,24 +13,17 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Tuple
 
-import numpy as np
 
 from ..thermodynamics import (
     STANDARD_GIBBS_GLUCOSE,
     STANDARD_GIBBS_ATP,
     STANDARD_REDOX_POTENTIALS,
-    redox_potential,
     max_work_from_redox,
     compute_coupling_efficiency,
-    proton_motive_force,
 )
-from ..energy_balance import EnergyBalance
 from ..pareto_optimizer import (
     DesignParameters,
     ObjectiveFunction,
-    SUBSTRATE_ATP,
-    NADH_COUNT,
-    FADH2_COUNT,
 )
 
 # ---------------------------------------------------------------------------

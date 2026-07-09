@@ -8,10 +8,10 @@ thermodynamic efficiency, and energy accounting for a specific metabolic
 configuration.
 """
 
-from .natural_mitochondria import *
-from .bacterial_respiration import *
-from .fermentation import *
-from .artificial_pathways import *
+from .natural_mitochondria import NaturalMitochondriaBenchmark
+from .bacterial_respiration import BacterialRespirationBenchmark
+from .fermentation import FermentationBenchmark
+from .artificial_pathways import ArtificialPathwaysBenchmark, BENCHMARK_COMPARISON
 
 __all__ = [
     "NaturalMitochondriaBenchmark",

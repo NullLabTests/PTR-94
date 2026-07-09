@@ -10,8 +10,8 @@ conditions.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from typing import Any, Dict, List, Tuple
+from dataclasses import dataclass
+from typing import Dict, List, Tuple
 
 import numpy as np
 
@@ -179,7 +179,7 @@ class ATPFreeEnergyExperiment:
         # >100% efficiency, indicating it is not thermodynamically feasible.
 
         lines.append(f"\n  Breakpoint ΔG_ATP (ceiling drops below 94): {r.breakpoint_dg:.1f} kJ/mol")
-        lines.append(f"  Below this, PTR-94 target becomes thermodynamically infeasible.")
+        lines.append("  Below this, PTR-94 target becomes thermodynamically infeasible.")
         lines.append("=" * 74)
         return "\n".join(lines)
 

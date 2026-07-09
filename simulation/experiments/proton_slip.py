@@ -10,8 +10,8 @@ translocate without driving ATP synthesis.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from typing import Any, Dict, List, Tuple
+from dataclasses import dataclass
+from typing import Dict, List, Tuple
 
 import numpy as np
 
@@ -25,9 +25,6 @@ from ..pareto_optimizer import (
     DesignParameters,
     ObjectiveFunction,
     SUBSTRATE_ATP,
-    NADH_COUNT,
-    FADH2_COUNT,
-    THEORETICAL_MAX_ATP,
 )
 
 

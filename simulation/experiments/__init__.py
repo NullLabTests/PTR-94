@@ -6,13 +6,13 @@ Reproducible simulation experiments exploring the theoretical maximum of
 94 ATP per glucose under various conditions and perturbations.
 """
 
-from .leakage_sensitivity import *
-from .atp_free_energy import *
-from .alternative_carriers import *
-from .membrane_potential import *
-from .proton_slip import *
-from .enzyme_efficiency import *
-from .temperature_effects import *
+from .leakage_sensitivity import LeakageSensitivityExperiment
+from .atp_free_energy import ATPFreeEnergyExperiment
+from .alternative_carriers import AlternativeCarrierExperiment
+from .membrane_potential import MembranePotentialExperiment
+from .proton_slip import ProtonSlipExperiment
+from .enzyme_efficiency import EnzymeEfficiencyExperiment
+from .temperature_effects import TemperatureEffectsExperiment
 
 __all__ = [
     "LeakageSensitivityExperiment",

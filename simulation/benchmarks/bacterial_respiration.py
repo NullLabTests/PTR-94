@@ -10,14 +10,12 @@ Prokaryotes lack mitochondrial compartments, avoiding shuttle costs.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict
 
-import numpy as np
 
 from ..thermodynamics import (
     STANDARD_GIBBS_GLUCOSE,
     STANDARD_GIBBS_ATP,
-    PHYSIOLOGICAL_GIBBS_ATP,
     compute_theoretical_max_atp,
     compute_coupling_efficiency,
     entropy_production,
@@ -164,10 +162,6 @@ class BacterialRespirationBenchmark:
             return ""
         r = self.result
 
-        efficiency_natural = compute_coupling_efficiency(
-            self.result.atp_yield, STANDARD_GIBBS_GLUCOSE, self.delta_g_atp
-        )
-
         lines = [
             "=" * 84,
             "  BACTERIAL RESPIRATION BENCHMARK — Prokaryotic OXPHOS",
@@ -185,7 +179,7 @@ class BacterialRespirationBenchmark:
             f"  Substrate-level ATP:    {r.substrate_atp} ATP",
             f"  Redox-derived ATP:      {r.redox_atp:.1f} ATP",
             f"  H+/NADH (net):          {r.h_per_nadh:.0f}",
-            f"  H+/FADH2 (net):         4.0",
+            "  H+/FADH2 (net):         4.0",
             f"  H+/ATP synthase:        {r.h_per_atp:.1f}",
             f"  Total H+ pumped:        {int(8*10 + 4*2)} per glucose (approx.)",
             "",

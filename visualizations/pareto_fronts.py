@@ -1,5 +1,4 @@
-from typing import Optional, List, Dict, Tuple
-import random
+from typing import Optional, List, Tuple
 
 
 DEFAULT_PARETO_RESULTS = {

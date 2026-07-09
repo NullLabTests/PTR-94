@@ -9,20 +9,18 @@ Coupling Module. Scans Δψ from -100 mV to -300 mV (inside negative).
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from typing import Any, Dict, List, Tuple
+from dataclasses import dataclass
+from typing import Dict, List, Tuple
 
 import numpy as np
 
 from ..thermodynamics import (
     CONST,
     proton_motive_force,
-    gibbs_from_ph_and_potential,
 )
 from ..kinetics import ProtonLeakKinetics, ATPSynthaseKinetics
 from ..pareto_optimizer import (
     DesignParameters,
-    ObjectiveFunction,
     NADH_COUNT,
     FADH2_COUNT,
     SUBSTRATE_ATP,

@@ -80,10 +80,9 @@ def print_thermodynamic_checks(atp_yield):
     print(f"  Uncaptured / dissipated:                {DELTA_G_GLUCOSE - energy_captured:.1f} kJ/mol")
     print()
 
-    nat_efficiency = 30.5 / DELTA_G_ATP_CELL  # ~55%
-    print(f"Comparison context:")
-    print(f"  Typical eukaryotic respiration:         ~30-32 ATP (~32-34%)")
-    print(f"  Typical prokaryotic respiration:        ~36-38 ATP (~37-40%)")
+    print("Comparison context:")
+    print("  Typical eukaryotic respiration:         ~30-32 ATP (~32-34%)")
+    print("  Typical prokaryotic respiration:        ~36-38 ATP (~37-40%)")
     print(f"  PTR-94 target:                          {atp_yield} ATP ({efficiency:.1f}%)")
     print(f"  Theoretical ceiling:                    {theoretical_max:.1f} ATP (100%)")
 

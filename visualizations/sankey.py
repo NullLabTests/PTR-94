@@ -19,7 +19,6 @@ def energy_sankey(energy_balance_data: Optional[dict] = None,
     try:
         import matplotlib.pyplot as plt
         import matplotlib.patches as mpatches
-        import matplotlib.lines as mlines
     except ImportError:
         return None
 
@@ -112,13 +111,13 @@ def energy_sankey(energy_balance_data: Optional[dict] = None,
     )
     draw_flow(
         2.0, 3.0, 3.25, 2.5, width=0.1,
-        label=f"",
+        label="",
         color=module_colors["glucose"],
     )
 
     legend_elements = [
-        mpatches.Patch(color=c, label=l, alpha=0.8)
-        for l, c in [
+        mpatches.Patch(color=c, label=label_name, alpha=0.8)
+        for label_name, c in [
             ("Glucose Energy", module_colors["glucose"]),
             ("Glycolysis", module_colors["glycolysis"]),
             ("PDH + TCA", module_colors["pdh_tca"]),

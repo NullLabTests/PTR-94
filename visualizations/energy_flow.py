@@ -21,7 +21,6 @@ def energy_flow_chart(atp_yield: int = DEFAULT_ATP_YIELD,
                      "PCM\n(Redox → 90 ATP)"]
     substrate_atp = [2, 2, 0]
     redox_atp = [15, 75, 0]
-    total_bars = [17, 77, 0]
     all_groups = [substrate_atp, redox_atp]
     group_names = ["Substrate-level ATP", "Redox-derived ATP"]
     colors = ["#4477AA", "#CCBB44"]

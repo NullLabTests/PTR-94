@@ -67,6 +67,14 @@ from .monte_carlo import (
 )
 
 __all__ = [
+    "ThermodynamicState",
+    "compute_delta_g",
+    "compute_equilibrium_constant",
+    "standard_conditions_correction",
+    "EnergyBalance",
+    "compute_atp_yield",
+    "compute_proton_motive_force",
+    "compute_redox_potential",
     "DesignParameters",
     "ObjectiveFunction",
     "ParetoOptimizer",
@@ -80,6 +88,10 @@ __all__ = [
     "get_param_bounds",
     "random_design",
     "OBJECTIVE_REGISTRY",
+    "KineticModel",
+    "michaelis_menten_rate",
+    "hill_rate",
+    "compute_flux",
     "LocalSensitivity",
     "GlobalSensitivity",
     "SensitivityReport",

@@ -15,22 +15,12 @@ from typing import Any, Dict, List, Tuple
 
 import numpy as np
 
-from ..thermodynamics import (
-    STANDARD_GIBBS_GLUCOSE,
-    STANDARD_GIBBS_ATP,
-    compute_coupling_efficiency,
-)
 from ..kinetics import (
     EnzymeKinetics,
-    KineticParameter,
-    PathwayKinetics,
 )
 from ..pareto_optimizer import (
     DesignParameters,
     ObjectiveFunction,
-    SUBSTRATE_ATP,
-    NADH_COUNT,
-    FADH2_COUNT,
 )
 
 
@@ -229,9 +219,6 @@ class EnzymeEfficiencyExperiment:
             Estimated ATP yield per glucose.
         """
         info = ENZYME_MODULES[enzyme_name]
-        nominal_kcat_km = info["kcat_km_nominal"]
-        scaled_kcat_km = nominal_kcat_km * multiplier
-
         # ASSUMPTION: The ATP yield is proportional to the flux through
         # each enzyme. We use a simplified model where flux scales as:
         #   flux = Vmax * [S] / (Km + [S])
